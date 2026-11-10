@@ -84,7 +84,7 @@ async function load() {
       });
     }
   } catch (e) { console.error('load error', e); }
-  try { state.settings = Object.assign({ name: '', theme: 'light', autosave: 3, themeName: 'Номин', fontFamily: '' }, JSON.parse(localStorage.getItem(SETTINGS_KEY()) || '{}')); } catch {}
+  try { state.settings = Object.assign({ name: '', theme: 'light', autosave: 3, themeName: 'Номин', fontFamily: '', editorFontSize: 16 }, JSON.parse(localStorage.getItem(SETTINGS_KEY()) || '{}')); } catch {}
 }
 async function saveEntry(date) {
   const e = state.entries[date];
@@ -188,6 +188,15 @@ const EMOJI_CATS = {
 
 // ---------- Password protection ----------
 const LOCK_KEY = 'journal-lock-hash';
+const SIZE_KEY = 'journal-editor-size';
+// редакторын үндсэн үсгийн хэмжээ (тусгаар хадгална — ачаалж байхад дарааллын алдаагүй байх)
+function loadEditorSize() {
+  const v = Number(localStorage.getItem(SIZE_KEY));
+  if (v >= 8 && v <= 96) $('editor').style.fontSize = v + 'px';
+}
+function saveEditorSize(v) {
+  localStorage.setItem(SIZE_KEY, String(v));
+}
 async function hashLockPw(pw) {
   const data = new TextEncoder().encode('lock:' + pw);
   const h = await crypto.subtle.digest('SHA-256', data);
@@ -643,6 +652,86 @@ function getInsertRange() {
     sel.addRange(range);
   }
   return sel.getRangeAt(0);
+}
+
+function persistSettings() {
+  localStorage.setItem(SETTINGS_KEY(), JSON.stringify(state.settings));
+}
+
+// ---------- Font size ----------
+const FONT_SIZES = [12, 13, 14, 16, 18, 20, 22, 24, 28, 32, 40, 48];
+function sizeStep(cur, dir) {
+  let i = FONT_SIZES.findIndex(s => s >= cur - 0.01);
+  if (i < 0) i = FONT_SIZES.length - 1;
+  else if (FONT_SIZES[i] < cur) i++;
+  i = Math.max(0, Math.min(FONT_SIZES.length - 1, i + dir));
+  return FONT_SIZES[i];
+}
+function fontSizeOf(node) {
+  const el = node && node.nodeType === 3 ? node.parentElement : node;
+  return (el && parseFloat(getComputedStyle(el).fontSize)) || 16;
+}
+function blockAt(node, editor) {
+  let el = node && node.nodeType === 3 ? node.parentElement : node;
+  while (el && el !== editor && !/^(P|LI|H1|H2|H3|H4|BLOCKQUOTE|TD|TH)$/.test(el.tagName)) el = el.parentElement;
+  return (el && el !== editor) ? el : null;
+}
+function changeFontSize(dir) {
+  const editor = $('editor');
+  const sel = window.getSelection();
+  if (!sel) return;
+  let range = sel.rangeCount ? sel.getRangeAt(0) : null;
+  if (!range) {
+    range = document.createRange();
+    range.selectNodeContents(editor);
+    range.collapse(false);
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+  if (!editor.contains(range.commonAncestorContainer)) return;
+
+  // 1) Текст сонгосон бол сонгосон хэсэгт хэрэглэнэ
+  if (!range.collapsed) {
+    const cur = fontSizeOf(sel.anchorNode);
+    const next = sizeStep(cur, dir);
+    const host = sel.anchorNode.nodeType === 3 ? sel.anchorNode.parentElement : sel.anchorNode;
+    const wholeSpan = host && host.tagName === 'SPAN' && host.style.fontSize && range.toString() === host.textContent;
+    if (wholeSpan) {
+      host.style.fontSize = next + 'px';
+    } else {
+      const span = document.createElement('span');
+      span.style.fontSize = next + 'px';
+      try {
+        range.surroundContents(span);
+        const r2 = document.createRange();
+        r2.selectNodeContents(span);
+        sel.removeAllRanges(); sel.addRange(r2);
+      } catch (e) {
+        const blocks = [...editor.querySelectorAll('p,li,h1,h2,h3,h4,blockquote,td,th')].filter(b => range.intersectsNode(b));
+        blocks.forEach(b => { b.style.fontSize = next + 'px'; });
+      }
+    }
+    editor.focus();
+    triggerAutosave();
+    toast('Үсгийн хэмжээ: ' + next + 'px');
+    return;
+  }
+
+  // 2) Сонголтгүй бол курсор байгаа мөрөнд, эсвэл бүх бичлэрт
+  let block = blockAt(range.startContainer, editor);
+  if (block && !editor.contains(block)) block = null;
+  if (block) {
+    const next = sizeStep(fontSizeOf(range.startContainer), dir);
+    block.style.fontSize = next + 'px';
+    triggerAutosave();
+    toast('Мөрийн хэмжээ: ' + next + 'px');
+  } else {
+    const next = sizeStep(parseFloat(getComputedStyle(editor).fontSize) || 16, dir);
+    editor.style.fontSize = next + 'px';
+    saveEditorSize(next);
+    triggerAutosave();
+    toast('Бичлэрийн хэмжээ: ' + next + 'px');
+  }
 }
 
 function insertAtCursor(text) {
@@ -1221,7 +1310,7 @@ async function saveSettings() {
   if (state.settings.theme === 'dark') applyTheme('Харанхуй');
   else if (state.settings.theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) applyTheme('Харанхуй');
   else applyTheme(state.settings.themeName || 'Номин');
-  localStorage.setItem(SETTINGS_KEY(), JSON.stringify(state.settings));
+  persistSettings();
   $('settings-dialog').close();
   toast('Тохиргоо хадгалагдлаа.');
 }
@@ -1252,7 +1341,7 @@ function renderColorThemes() {
     b.addEventListener('click', () => {
       applyTheme(t.name);
       state.settings.themeName = t.name;
-      localStorage.setItem(SETTINGS_KEY(), JSON.stringify(state.settings));
+      persistSettings();
       document.querySelectorAll('.color-theme').forEach(x => x.classList.remove('active'));
       b.classList.add('active');
       toast('Өнгө: ' + t.name);
@@ -1379,6 +1468,7 @@ async function enterApp(user) {
   else if (state.settings.theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) applyTheme('Харанхуй');
   else applyTheme(state.settings.themeName || 'Номин');
   if (state.settings.fontFamily) applyFont(state.settings.fontFamily);
+  loadEditorSize();
   $('entry-date').value = state.current;
   renderEditor();
   refreshMiniList();
@@ -1499,6 +1589,10 @@ function attachAppListeners() {
   $('list-search').addEventListener('input', renderList);
   $('list-sort').addEventListener('change', renderList);
   $('mini-sort').addEventListener('change', refreshMiniList);
+  $('fs-up').addEventListener('click', () => changeFontSize(1));
+  $('fs-down').addEventListener('click', () => changeFontSize(-1));
+  // toolbar товч дарахад editor-ийн сонголт улдагдахгүй байх
+  document.querySelectorAll('.tb').forEach(b => b.addEventListener('mousedown', e => e.preventDefault()));
   $('global-search').addEventListener('input', e => doSearch(e.target.value));
   $('editor').addEventListener('input', triggerAutosave);
   $('editor').addEventListener('blur', saveCurrent);
@@ -1546,6 +1640,7 @@ async function init() {
   $('auth-form').addEventListener('submit', e => { e.preventDefault(); doAuth(); });
   $('auth-switch').addEventListener('click', () => showAuth($('auth-form').dataset.mode === 'login' ? 'register' : 'login'));
   $('logout-btn').addEventListener('click', doLogout);
+  loadEditorSize();
   attachAppListeners();
 
   const user = await getCurrentUser();
