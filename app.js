@@ -22,6 +22,21 @@ function todayStr(d = new Date()) {
   return [d.getFullYear(), String(d.getMonth()+1).padStart(2,'0'), String(d.getDate()).padStart(2,'0')].join('-');
 }
 function parseDate(s) { const [y,m,d] = s.split('-').map(Number); return new Date(y, m-1, d); }
+// ts.monkhtenger8985@gmail.com -> Monkhtenger
+function shortName(user) {
+  const src = (user && (user.username || user.email)) || '';
+  const local = (src.split('@')[0] || src).trim();
+  const parts = local.split(/[._\-\s]+/).map(p => p.replace(/\d+/g, '')).filter(Boolean);
+  const base = parts.sort((a, b) => b.length - a.length)[0] || local || 'Хэрэглэгч';
+  return base.charAt(0).toUpperCase() + base.slice(1);
+}
+// ts.monkhtenger8985@gmail.com -> t•••••@gmail.com
+function maskEmail(email) {
+  if (!email) return '';
+  const [local, domain] = email.split('@');
+  if (!domain) return email;
+  return local.slice(0, 1) + '•••••@' + domain;
+}
 function formatDate(s) {
   const d = parseDate(s);
   const months = ['1-р сар','2-р сар','3-р сар','4-р сар','5-р сар','6-р сар','7-р сар','8-р сар','9-р сар','10-р сар','11-р сар','12-р сар'];
@@ -1350,7 +1365,13 @@ const drawState = { tool: 'pencil', color: '#2a2433', size: 3, drawing: false, h
 async function enterApp(user) {
   state.session = user;
   $('side-user').hidden = false;
-  $('session-name').textContent = user.username;
+  const nameEl = $('session-name');
+  const mailEl = $('session-role');
+  const full = user.email || user.username || '';
+  nameEl.textContent = shortName(user);
+  mailEl.textContent = maskEmail(full);
+  mailEl.title = 'Бүтэн и-мэйлийг харах';
+  mailEl.onclick = () => { mailEl.textContent = mailEl.textContent.includes('•') ? full : maskEmail(full); };
   $('logout-btn').hidden = false;
   await load();
   scheduleReminder();
