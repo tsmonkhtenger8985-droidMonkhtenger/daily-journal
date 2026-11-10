@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="mn">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Өдөр тутмын тэмдэглэл — өнгө, эможи, GIF, бичгийн хэв сонгох боломжтой.">
+  <title>Тэмдэглэл · Өдөр тутмын дэвтэр</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&family=Caveat:wght@400;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+Mongolian&family=Merriweather:wght@300;400;700&family=Lora:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;600;700&family=Dancing+Script:wght@400;600;700&family=Pacifico&family=Kalam:wght@300;400;700&family=Indie+Flower&family=Shadows+Into+Light&family=Satisfy&family=Great+Vibes&family=Sacramento&family=Allura&family=Tangerine:wght@400;700&family=Yellowtail&family=Parisienne&family=Cookie&family=Gloria+Hallelujah&family=Permanent+Marker&family=Handlee&family=Homemade+Apple&family=Reenie+Beanie&family=Rock+Salt&family=Amatic+SC:wght@400;700&family=Patrick+Hand&family=Architects+Daughter&family=Coming+Soon&family=Covered+By+Your+Grace&family=Nothing+You+Could+Do&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=4"><script src="vendor/supabase.js"></script><script type="module" src="app.js"></script>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-icon">✦</span><span>тэмдэглэл<small>ӨДӨР ТУТМЫН ДЭВТЭР</small></span></div>
+    <div class="sidebar-stats">
+      <div class="stat"><strong id="stat-streak">0</strong><span>Дараалсан өдөр</span></div>
+      <div class="stat"><strong id="stat-total">0</strong><span>Нийт тэмдэглэл</span></div>
+      <div class="stat"><strong id="stat-words">0</strong><span>Нийт үг</span></div>
+    </div>
+    <div class="sidebar-section">
+      <p class="nav-label">ХАРАХ</p>
+      <nav>
+        <button class="nav-btn active" data-view="editor" id="nav-editor"><span>✎</span> Бичих</button>
+        <button class="nav-btn" data-view="calendar" id="nav-calendar"><span>▦</span> Календар</button>
+        <button class="nav-btn" data-view="list" id="nav-list"><span>☰</span> Жагсаалт</button>
+        <button class="nav-btn" data-view="search" id="nav-search"><span>⌕</span> Хайх</button>
+      </nav>
+    </div>
+    <div class="sidebar-section">
+      <p class="nav-label">ТЭМДЭГЛЭЛҮҮД</p>
+      <div class="entry-list-mini" id="mini-list"></div>
+    </div>
+    <div class="sidebar-bottom">
+      <div class="side-user" id="side-user" hidden>
+        <span class="avatar small">👤</span>
+        <div><strong id="session-name">Хэрэглэгч</strong><small id="session-role">—</small></div>
+      </div>
+      <button class="ghost-btn" id="export-btn">↓ Экспорт</button>
+      <button class="ghost-btn" id="import-btn">↑ Импорт</button>
+      <input type="file" id="import-file" accept="application/json" hidden>
+      <button class="ghost-btn" id="settings-btn">⚙ Тохиргоо</button>
+      <button class="ghost-btn" id="logout-btn" hidden>🚪 Гарах</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- Editor view -->
+    <section class="view active" id="view-editor">
+      <header class="editor-header">
+        <div class="date-picker">
+          <button class="icon-btn" id="prev-day">‹</button>
+          <input type="date" id="entry-date">
+          <button class="icon-btn" id="next-day">›</button>
+          <button class="icon-btn" id="today-btn" title="Өнөөдөр">⊙</button>
+        </div>
+        <div class="mood-row" id="mood-row">
+          <span class="mood-label">Өнөөдрийн сэтгэл:</span>
+          <button class="mood-btn" data-mood="😊" title="Баяртай">😊</button>
+          <button class="mood-btn" data-mood="🥰" title="Хайртай">🥰</button>
+          <button class="mood-btn" data-mood="😌" title="Тайван">😌</button>
+          <button class="mood-btn" data-mood="🤔" title="Бодолтой">🤔</button>
+          <button class="mood-btn" data-mood="😢" title="Уйтгартай">😢</button>
+          <button class="mood-btn" data-mood="😡" title="Ууртай">😡</button>
+          <button class="mood-btn" data-mood="😴" title="Нойрмог">😴</button>
+          <button class="mood-btn" data-mood="🤩" title="Гайхалтай">🤩</button>
+        </div>
+      </header>
+
+      <div class="editor-toolbar" id="toolbar">
+        <div class="toolbar-group">
+          <button class="tb" data-cmd="bold" title="Тод"><b>B</b></button>
+          <button class="tb" data-cmd="italic" title="Налуу"><i>I</i></button>
+          <button class="tb" data-cmd="underline" title="Доогуур зураас"><u>U</u></button>
+          <button class="tb" data-cmd="strikeThrough" title="Дундуур зураас"><s>S</s></button>
+          <button class="tb" id="highlight-btn" title="Тодруулагч">🖍</button>
+        </div>
+        <div class="toolbar-group">
+          <button class="tb" data-cmd="insertUnorderedList" title="Жагсаалт">•</button>
+          <button class="tb" data-cmd="insertOrderedList" title="Дугаартай">1.</button>
+          <button class="tb" data-cmd="formatBlock" data-val="blockquote" title="Ишлэл">❝</button>
+          <button class="tb" data-cmd="formatBlock" data-val="h2" title="Гарчиг">H</button>
+        </div>
+        <div class="toolbar-group">
+          <button class="tb" id="emoji-btn" title="Эможи">😊</button>
+          <button class="tb" id="gif-btn" title="GIF">GIF</button>
+          <button class="tb" id="image-btn" title="Зураг оруулах">🖼</button>
+          <button class="tb" id="color-btn" title="Өнгө">🎨</button>
+          <button class="tb" id="font-btn" title="Бичгийн хэв">Aa</button>
+          <button class="tb" id="draw-btn" title="Зурах">✏️</button>
+          <button class="tb" id="tag-btn" title="Шошго">#</button>
+          <button class="tb" id="link-btn" title="Линк">🔗</button>
+          <button class="tb" id="table-btn" title="Хүснэгт">▦</button>
+          <button class="tb" id="capsule-btn" title="Цагны капсул">⏳</button>
+        </div>
+        <div class="toolbar-group">
+          <button class="tb" id="clear-btn" title="Цэвэрлэх">⌫</button>
+        </div>
+      </div>
+
+      <div class="tag-row" id="tag-row"></div>
+
+      <div class="title-row">
+        <input type="text" id="entry-title" placeholder="Гарчиг (сонголттой)" maxlength="120">
+      </div>
+      <div class="editor-wrap">
+        <div class="editor" id="editor" contenteditable="true" spellcheck="true" data-placeholder="Өнөөдөр юу болов? Сэтгэлээ нээнэ үү..."></div>
+      </div>
+
+      <div class="draw-panel" id="draw-panel" hidden>
+        <div class="draw-toolbar">
+          <div class="draw-tools">
+            <button class="draw-tool active" data-tool="pencil" title="Харандаа">✏️</button>
+            <button class="draw-tool" data-tool="marker" title="Маркер">🖍</button>
+            <button class="draw-tool" data-tool="highlighter" title="Тодруулагч">🖍</button>
+            <button class="draw-tool" data-tool="eraser" title="Балруул">🧽</button>
+          </div>
+          <div class="draw-colors" id="draw-colors"></div>
+          <div class="draw-size">
+            <label>Хэмжээ <input type="range" id="draw-size" min="1" max="30" value="3"></label>
+            <span id="draw-size-val">3</span>
+          </div>
+          <div class="draw-actions">
+            <button class="ghost-btn small" id="draw-undo">↶ Буцаах</button>
+            <button class="ghost-btn small" id="draw-clear">⌫ Цэвэрлэх</button>
+            <button class="ghost-btn small" id="draw-save">↓ Зураг болгох</button>
+            <button class="ghost-btn small" id="draw-close">✕ Хаах</button>
+          </div>
+        </div>
+        <canvas id="draw-canvas" width="800" height="400"></canvas>
+      </div>
+
+      <div class="editor-footer">
+        <span id="word-count">0 үг</span>
+        <span id="save-status">Хадгалагдсан</span>
+      </div>
+    </section>
+
+    <!-- Calendar view -->
+    <section class="view" id="view-calendar">
+      <div class="calendar-header">
+        <button class="icon-btn" id="cal-prev">‹</button>
+        <h2 id="cal-title"></h2>
+        <button class="icon-btn" id="cal-next">›</button>
+      </div>
+      <div class="calendar-grid" id="calendar-grid"></div>
+      <div class="calendar-legend">
+        <span class="dot has-entry"></span> Тэмдэглэлтэй өдөр
+      </div>
+    </section>
+
+    <!-- List view -->
+    <section class="view" id="view-list">
+      <h2 class="view-title">Бүх тэмдэглэл</h2>
+      <div class="list-filters">
+        <input type="search" id="list-search" placeholder="⌕  Хайх...">
+        <select id="list-sort">
+          <option value="newest">Шинэ эхэнд</option>
+          <option value="oldest">Хуучин эхэнд</option>
+        </select>
+      </div>
+      <div class="entries-grid" id="entries-grid"></div>
+    </section>
+
+    <!-- Search view -->
+    <section class="view" id="view-search">
+      <h2 class="view-title">Хайх</h2>
+      <div class="search-box">
+        <input type="search" id="global-search" placeholder="Тэмдэглэлийн агуулга, шошго, сэтгэлээр хайх...">
+      </div>
+      <div class="search-results" id="search-results"></div>
+    </section>
+  </main>
+</div>
+
+<!-- Emoji picker -->
+<div class="picker-popover" id="emoji-popover" hidden>
+  <div class="picker-head">
+    <input type="search" id="emoji-search" placeholder="Эможи хайх...">
+    <button class="close" data-close="emoji-popover">×</button>
+  </div>
+  <div class="emoji-tabs" id="emoji-tabs"></div>
+  <div class="emoji-grid" id="emoji-grid"></div>
+</div>
+
+<!-- GIF picker -->
+<div class="picker-popover" id="gif-popover" hidden>
+  <div class="picker-head">
+    <input type="search" id="gif-search" placeholder="GIF хайх (англиар)...">
+    <button class="close" data-close="gif-popover">×</button>
+  </div>
+  <div class="gif-grid" id="gif-grid"></div>
+  <p class="helper gif-credit">GIF: Giphy</p>
+</div>
+
+<!-- Color picker -->
+<div class="picker-popover" id="color-popover" hidden>
+  <div class="picker-head"><strong>Өнгөний схем</strong><button class="close" data-close="color-popover">×</button></div>
+  <div class="color-themes" id="color-themes"></div>
+  <div class="color-custom">
+    <label>Өөрийн өнгө <input type="color" id="custom-color"></label>
+  </div>
+</div>
+
+<!-- Font picker -->
+<div class="picker-popover" id="font-popover" hidden>
+  <div class="picker-head"><strong>Бичгийн хэв</strong><button class="close" data-close="font-popover">×</button></div>
+  <div class="font-list" id="font-list"></div>
+</div>
+
+<!-- Highlight color picker -->
+<div class="picker-popover" id="highlight-popover" hidden>
+  <div class="picker-head"><strong>Тодруулагч өнгө</strong><button class="close" data-close="highlight-popover">×</button></div>
+  <div class="hl-colors" id="hl-colors"></div>
+  <div class="color-custom"><label>Өөрийн өнгө <input type="color" id="hl-custom"></label></div>
+</div>
+
+<!-- Link popover -->
+<div class="link-popover" id="link-popover" hidden>
+  <span class="link-popover-url" id="link-popover-url"></span>
+  <a class="link-popover-open" id="link-popover-open" target="_blank" rel="noopener">↗ Нээх</a>
+  <button class="close" id="link-popover-remove" title="Линк устгах">×</button>
+</div>
+
+<!-- Tag dialog -->
+<div class="picker-popover" id="tag-popover" hidden>
+  <div class="picker-head"><strong>Шошго</strong><button class="close" data-close="tag-popover">×</button></div>
+  <div class="tag-input-row">
+    <input type="text" id="tag-input" placeholder="Шошго нэмэх..." maxlength="20">
+    <button class="primary small" id="tag-add">Нэмэх</button>
+  </div>
+  <div class="tag-cloud" id="tag-cloud"></div>
+</div>
+
+<!-- Auth overlay (split screen) -->
+<div class="auth-overlay" id="auth-overlay" hidden>
+  <div class="auth-left">
+    <div class="auth-left-content">
+      <div class="auth-brand"><span class="brand-icon">✦</span><span>тэмдэглэл<small>ӨДӨР ТУТМЫН ДЭВТЭР</small></span></div>
+      <h1 class="auth-headline">Өдөр бүрийг<br><em>тэмдэглэлтэй.</em></h1>
+      <p class="auth-sub">Сэтгэл, бодол, мөрөөдлөө нэг дороос хадгал. Өнгө, бичиг, эможи — бүгдийг өөрийн болго.</p>
+      <div class="auth-preview">
+        <div class="preview-card" style="font-family:'Caveat',cursive">
+          <span class="preview-date">2026.11.07 · Бямба</span>
+          <h3 style="font-family:'Playfair Display',serif">Өнөөдрийн бодол</h3>
+          <p>Амьдрал бол <span class="hl">алив бүхний</span> нийлбэр. Өдөр бүр нэг мөр бичихэд л хангалттай...</p>
+          <div class="preview-tags"><span>#бодол</span><span>#амьдрал</span></div>
+        </div>
+        <div class="preview-card" style="font-family:'Dancing Script',cursive">
+          <span class="preview-date">2026.11.06 · Баасан</span>
+          <h3 style="font-family:'Great Vibes',cursive;font-size:24px">Миний мөрөөдөл</h3>
+          <p>Энэ жил <span class="hl">шинэ зүйл</span> сурч, өөрийгөө хөгжүүлнэ...</p>
+        </div>
+        <div class="preview-card" style="font-family:'Kalam',cursive">
+          <span class="preview-date">2026.11.05 · Пүрэв</span>
+          <h3 style="font-family:'Permanent Marker',cursive;font-size:18px">Тэмдэглэл</h3>
+          <p>Өнөөдөр <span class="hl">гайхалтай</span> өдөр байлаа! 🌟</p>
+        </div>
+      </div>
+      <div class="auth-features">
+        <div class="af"><span>🎨</span> 10 өнгийн схем</div>
+        <div class="af"><span>🔤</span> 38 бичгийн хэв</div>
+        <div class="af"><span>😊</span> 200+ эможи</div>
+        <div class="af"><span>🎬</span> GIF хайлт</div>
+        <div class="af"><span>☁️</span> Үүлэн хадгалалт</div>
+        <div class="af"><span>🔒</span> Нууц үгээр хамгаалах</div>
+      </div>
+    </div>
+  </div>
+  <div class="auth-right">
+    <div class="auth-form-wrap">
+      <div class="auth-form-card">
+      <form id="auth-form">
+        <p class="eyebrow">ТЭМДЭГЛЭЛ · НЭВТРЭХ</p>
+        <h2 id="auth-title">Нэвтрэх</h2>
+        <p class="helper" id="auth-help">Нэвтрэх нэр, нууц үгээ оруулна уу.</p>
+        <label>И-МЭЙЛ <input type="email" id="auth-username" autocomplete="email" required placeholder="таны@email.com"></label>
+        <label>НУУЦ ҮГ <input type="password" id="auth-password" autocomplete="current-password" minlength="6" maxlength="100" required></label>
+        <p class="form-error" id="auth-error" role="alert"></p>
+        <button class="primary auth-submit" type="button" id="auth-submit">Нэвтрэх ↗</button>
+        <button type="button" class="link-button" id="auth-switch">Шинээр бүртгүүлэх</button>
+        <div class="auth-divider"><span>эсвэл</span></div>
+        <p class="auth-note">Бүртгэл үүсгэснээр таны тэмдэглэл үүлэнд хадгалагдана.</p>
+      </form>
+    </div>
+    </div>
+  </div>
+</div>
+
+<!-- Lock screen dialog -->
+<dialog id="lock-dialog">
+  <div class="dialog-head"><div><p class="eyebrow">НУУЦ ҮГЭЭР ХАМГААЛАХ</p><h2>Тэмдэглэл түгжигдсэн</h2></div></div>
+  <p class="helper">Нууц үгээ оруулна уу.</p>
+  <label>НУУЦ ҮГ <input type="password" id="lock-password" autocomplete="current-password" required></label>
+  <p class="form-error" id="lock-error" role="alert"></p>
+  <button class="primary" type="button" id="lock-submit">Нээх ↗</button>
+</dialog>
+
+<!-- Table insert dialog -->
+<dialog id="table-dialog">
+  <div class="dialog-head"><div><p class="eyebrow">ХҮСНЭГТ</p><h2>Хүснэгт үүсгэх</h2></div><button type="button" class="close" data-close="table-dialog">×</button></div>
+  <label>Мөр (rows) <input type="number" id="table-rows" min="1" max="20" value="3"></label>
+  <label>Багана (cols) <input type="number" id="table-cols" min="1" max="10" value="3"></label>
+  <label>Гарчиг мөр <select id="table-header"><option value="yes">Тийм</option><option value="no">Үгүй</option></select></label>
+  <label>Хүрээ <select id="table-border"><option value="all">Бүгд</option><option value="outer">Гадна тал</option><option value="none">Үгүй</option></select></label>
+  <div class="dialog-actions"><button type="button" class="secondary" data-close="table-dialog">Болих</button><button class="primary" id="table-create">Үүсгэх</button></div>
+</dialog>
+
+<!-- Table editing toolbar (floating) -->
+<div class="table-toolbar" id="table-toolbar" hidden>
+  <button class="tb small" id="tbl-add-row-above" title="Мөр нэмэх (дээр)">+М↑</button>
+  <button class="tb small" id="tbl-add-row-below" title="Мөр нэмэх (доор)">+М↓</button>
+  <button class="tb small" id="tbl-add-col-left" title="Багана нэмэх (зүүн)">+Б←</button>
+  <button class="tb small" id="tbl-add-col-right" title="Багана нэмэх (баруун)">+Б→</button>
+  <button class="tb small" id="tbl-del-row" title="Мөр устгах">-М</button>
+  <button class="tb small" id="tbl-del-col" title="Багана устгах">-Б</button>
+  <button class="tb small" id="tbl-del-table" title="Хүснэгт устгах">🗑</button>
+  <button class="tb small" id="tbl-merge" title="Нэгтгэх">⊔</button>
+</div>
+
+<!-- Time capsule dialog -->
+<dialog id="capsule-dialog">
+  <div class="dialog-head"><div><p class="eyebrow">ЦАГНЫ КАПСУЛ</p><h2>Цагны капсул үүсгэх</h2></div><button type="button" class="close" data-close="capsule-dialog">×</button></div>
+  <p class="helper">Тэмдэглэлээ бичээд хугацаа тохируулна. Тухайн хугацаа хүртэл нээгдэхгүй (зөвхөн та харна).</p>
+  <label>Гарчиг <input type="text" id="capsule-title" maxlength="80" placeholder="Капсулын нэр"></label>
+  <label>Нээх огноо/цаг <input type="datetime-local" id="capsule-date" required></label>
+  <label>Агуулга <textarea id="capsule-content" rows="5" placeholder="Энд бичнэ үү..."></textarea></label>
+  <div class="dialog-actions"><button type="button" class="secondary" data-close="capsule-dialog">Болих</button><button class="primary" id="capsule-create">Үүсгэх ⏳</button></div>
+</dialog>
+
+<!-- Settings dialog -->
+<dialog id="settings-dialog">
+  <div class="dialog-head"><div><p class="eyebrow">ТОХИРГОО</p><h2>Хувийн тохиргоо</h2></div><button type="button" class="close" data-close="settings-dialog">×</button></div>
+  <label>Нэр <input type="text" id="settings-name" maxlength="40" placeholder="Таны нэр"></label>
+  <label>Сэдэв <select id="settings-theme"><option value="light">Цайвар</option><option value="dark">Харанхуй</option><option value="auto">Автомат</option></select></label>
+  <label>Автомат хадгалах <select id="settings-autosave"><option value="1">1 секунд</option><option value="3">3 секунд</option><option value="5">5 секунд</option><option value="0">Унтраах</option></select></label>
+  <label>Нууц үг <input type="password" id="settings-lock-pw" placeholder="Шинэ нууц үг (хоосон = устгах)" maxlength="100"></label>
+  <label>Өдрийн сануулга <select id="settings-reminder"><option value="0">Унтраах</option><option value="1">1 цаг тутам</option><option value="2">2 цаг тутам</option><option value="4">4 цаг тутам</option></select></label>
+  <div class="dialog-actions"><button type="button" class="secondary" data-close="settings-dialog">Хаах</button><button class="primary" id="settings-save">Хадгалах</button></div>
+</dialog>
+
+<!-- Toast -->
+<input type="file" id="image-file" accept="image/*" multiple hidden>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- Floating action button for mobile -->
+<button class="fab" id="fab-new" title="Шинэ тэмдэглэл">＋</button>
+</body></html>
