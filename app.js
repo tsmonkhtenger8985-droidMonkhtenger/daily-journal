@@ -64,6 +64,7 @@ async function load() {
           tags: row.tags || [],
           color: row.color || 'Номин',
           font: row.font || '',
+          words: wordCount(row.content || ''),
         };
       });
     }
@@ -332,7 +333,7 @@ async function saveCurrent() {
     delete state.entries[state.current];
     try { await sb.from('journal_entries').delete().eq('entry_date', state.current); } catch (e) { console.error(e); }
   } else {
-    state.entries[state.current] = { title, html, mood, tags, color, font };
+    state.entries[state.current] = { title, html, mood, tags, color, font, words: wordCount(html) };
     await saveEntry(state.current);
   }
   updateSaveStatus('Хадгалагдсан ✓');
@@ -379,13 +380,28 @@ function renderCalendar() {
     else { dayNum = i - startDay + 1; const d = new Date(y, m, dayNum); dateStr = todayStr(d); }
     if (other) cell.classList.add('other-month');
     if (dateStr === today) cell.classList.add('today');
+    const num = document.createElement('span'); num.className = 'cal-num'; num.textContent = dayNum;
+    cell.append(num);
     const e = getEntry(dateStr);
-    if (e) { cell.classList.add('has-entry'); if (e.mood) { const md = document.createElement('span'); md.className = 'cal-mood'; md.textContent = e.mood; cell.append(md); } }
-    cell.append(document.createTextNode(dayNum));
+    if (e) {
+      cell.classList.add('has-entry');
+      if (e.mood) { const md = document.createElement('span'); md.className = 'cal-mood'; md.textContent = e.mood; cell.append(md); }
+      const snippet = document.createElement('div'); snippet.className = 'cal-snippet';
+      snippet.textContent = entryPreview(e);
+      snippet.title = entryPreview(e, 160);
+      cell.append(snippet);
+    }
     cell.addEventListener('click', () => { showCalDetail(dateStr); });
     grid.append(cell);
   }
   showCalDetail(state.current);
+}
+
+// тэмдэглэлийн гарчиг (эсвэл агуулгын эхний хэсэг)
+function entryPreview(e, len = 60) {
+  const src = (e.title && e.title.trim()) || (e.html || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  const t = src.length > len ? src.slice(0, len).trim() + '…' : src;
+  return t || 'Тэмдэглэл';
 }
 
 // ---------- Calendar detail (entry preview) ----------
@@ -421,7 +437,7 @@ function showCalDetail(date) {
   body.innerHTML = e.html || '';
   box.append(body);
   const foot = document.createElement('div'); foot.className = 'cal-detail-foot';
-  foot.textContent = `${wordCount(e.html || '')} үг`;
+  foot.textContent = `${e.words !== undefined ? e.words : wordCount(e.html || '')} үг`;
   box.append(foot);
 }
 
@@ -530,7 +546,7 @@ function updateStats() {
   const dates = Object.keys(state.entries).sort();
   $('stat-total').textContent = dates.length;
   let words = 0;
-  dates.forEach(d => { words += wordCount(state.entries[d].html || ''); });
+  dates.forEach(d => { const e = state.entries[d]; words += (e.words !== undefined ? e.words : wordCount(e.html || '')); });
   $('stat-words').textContent = words;
   let streak = 0;
   const today = new Date();
