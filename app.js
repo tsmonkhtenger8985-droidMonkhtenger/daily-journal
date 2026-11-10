@@ -158,16 +158,16 @@ function applyFont(f) {
 
 // ---------- EMOJI data ----------
 const EMOJI_CATS = {
-  'Сэтгэл': ['ðŸ˜€','ðŸ˜ƒ','ðŸ˜„','ðŸ˜','ðŸ˜†','ðŸ¥¹','ðŸ˜‚','ðŸ¤£','ðŸ˜Š','ðŸ˜‡','ðŸ™‚','ðŸ™ƒ','ðŸ˜‰','ðŸ˜Œ','ðŸ˜','ðŸ¥°','ðŸ˜˜','ðŸ˜—','ðŸ˜™','ðŸ˜š','ðŸ˜‹','ðŸ˜›','ðŸ˜œ','ðŸ¤ª','ðŸ˜','ðŸ¤‘','ðŸ¤—','ðŸ¤­','ðŸ¤«','ðŸ¤”','ðŸ¤','ðŸ¤¨','ðŸ˜','ðŸ˜‘','ðŸ˜¶','ðŸ˜','ðŸ˜’','ðŸ™„','ðŸ˜¬','ðŸ¤¥','ðŸ˜Œ','ðŸ˜”','ðŸ˜ª','ðŸ¤¤','ðŸ˜´','ðŸ˜·','ðŸ¤’','ðŸ¤•','ðŸ¤¢','ðŸ¤®','ðŸ¤§','ðŸ¥µ','ðŸ¥¶','ðŸ¥´','ðŸ˜µ','ðŸ¤¯','ðŸ¤ ','ðŸ¥³','ðŸ˜Ž','ðŸ¤“','ðŸ§'],
-  'Гар': ['ðŸ‘','ðŸ‘Ž','ðŸ‘','ðŸ™Œ','ðŸ¤','ðŸ™','✌️','ðŸ¤ž','ðŸ¤Ÿ','ðŸ¤˜','ðŸ‘Œ','ðŸ¤Œ','ðŸ¤','✋','ðŸ¤š','ðŸ–','ðŸ––','ðŸ‘‹','ðŸ¤™','ðŸ’ª','ðŸ¦¾','ðŸ–•','✍️','ðŸ’…','ðŸ¤³'],
-  'Зүрх': ['❤️','ðŸ§¡','ðŸ’›','ðŸ’š','ðŸ’™','ðŸ’œ','ðŸ–¤','ðŸ¤','ðŸ¤Ž','ðŸ’”','❤️‍ðŸ”¥','❤️‍ðŸ©¹','❣️','ðŸ’•','ðŸ’ž','ðŸ’“','ðŸ’—','ðŸ’–','ðŸ’˜','ðŸ’','ðŸ’Ÿ'],
-  'Байгаль': ['ðŸŒ¸','ðŸŒº','ðŸŒ»','ðŸŒ¹','ðŸŒ·','ðŸŒ¼','ðŸŒ±','ðŸŒ¿','ðŸ€','ðŸ','ðŸ‚','ðŸƒ','ðŸŒ²','ðŸŒ³','ðŸŒ´','ðŸŒµ','ðŸŒ¾','ðŸ','ðŸ‚'],
-  'Амьтан': ['ðŸ¶','ðŸ±','ðŸ­','ðŸ¹','ðŸ°','ðŸ¦Š','ðŸ»','ðŸ¼','ðŸ¨','ðŸ¯','ðŸ¦','ðŸ®','ðŸ·','ðŸ¸','ðŸµ','ðŸ”','ðŸ§','ðŸ¦','ðŸ¤','ðŸ£','ðŸ¦†','ðŸ¦…','ðŸ¦‰','ðŸ¦‡','ðŸº','ðŸ—','ðŸ´','ðŸ¦„','ðŸ','ðŸ›','ðŸ¦‹','ðŸŒ','ðŸž','ðŸœ','ðŸ¦Ÿ','ðŸ¦—','ðŸ•·','ðŸ¢','ðŸ','ðŸ¦Ž','ðŸ¦–','ðŸ¦•','ðŸ™','ðŸ¦‘','ðŸ¦','ðŸ¦ž','ðŸ¦€','ðŸ¡','ðŸ ','ðŸŸ','ðŸ¬','ðŸ³','ðŸ‹','ðŸ¦ˆ','ðŸŠ','ðŸ…','ðŸ†','ðŸ¦“','ðŸ¦','ðŸ¦§','ðŸ˜','ðŸ¦›','ðŸ¦','ðŸª','ðŸ«','ðŸ¦’','ðŸ¦˜','ðŸ¦¬','ðŸƒ','ðŸ‚','ðŸ„','ðŸŽ','ðŸ–','ðŸ','ðŸ‘','ðŸ','ðŸ¦™','ðŸ¦Œ','ðŸ•','ðŸ©','ðŸˆ','ðŸˆâ€â¬›','ðŸ“','ðŸ¦ƒ','ðŸ¦š','ðŸ¦œ','ðŸ¦¢','ðŸ¦©','ðŸ•Š','ðŸ‡','ðŸ¦','ðŸ¦¨','ðŸ¦¡','ðŸ¦¦','ðŸ¦«','ðŸ¿','ðŸ¦”'],
-  'Хоол': ['ðŸŽ','ðŸ','ðŸŠ','ðŸ‹','ðŸŒ','ðŸ‰','ðŸ‡','ðŸ“','ðŸ«','ðŸˆ','ðŸ’','ðŸ‘','ðŸ¥­','ðŸ','ðŸ¥¥','ðŸ¥','ðŸ…','ðŸ†','ðŸ¥‘','ðŸ¥¦','ðŸ¥¬','ðŸ¥’','ðŸŒ¶','ðŸ«‘','ðŸŒ½','ðŸ¥•','ðŸ«’','ðŸ§„','ðŸ§…','ðŸ¥”','ðŸ ','ðŸ¥','ðŸ¥¯','ðŸž','ðŸ¥–','ðŸ¥¨','ðŸ§€','ðŸ¥š','ðŸ³','ðŸ§ˆ','ðŸ¥ž','ðŸ§‡','ðŸ¥“','ðŸ¥©','ðŸ—','ðŸ–','ðŸ¦´','ðŸŒ­','ðŸ”','ðŸŸ','ðŸ•','ðŸ«“','ðŸ¥ª','ðŸ¥™','ðŸ§†','ðŸŒ®','ðŸŒ¯','ðŸ«”','ðŸ¥—','ðŸ¥˜','ðŸ«•','ðŸ¥«','ðŸ','ðŸœ','ðŸ²','ðŸ›','ðŸ£','ðŸ±','ðŸ¥Ÿ','ðŸ¦ª','ðŸ¤','ðŸ™','ðŸš','ðŸ˜','ðŸ¥','ðŸ¥ ','ðŸ¥®','ðŸ¢','ðŸ¡','ðŸ§','ðŸ¨','ðŸ¦','ðŸ¥§','ðŸ§','ðŸ°','ðŸŽ‚','ðŸ®','ðŸ­','ðŸ¬','ðŸ«','ðŸ¿','ðŸ©','ðŸª','ðŸŒ°','ðŸ¥œ','ðŸ¯'],
-  'Байгууламж': ['ðŸ ','ðŸ¡','ðŸ¢','ðŸ£','ðŸ¤','ðŸ¥','ðŸ¦','ðŸ¨','ðŸ©','ðŸ’’','⛪','ðŸ•Œ','ðŸ•','ðŸ›•','⛩','ðŸ—¼','ðŸ—½','ðŸ°','ðŸŸ','ðŸŽª'],
-  'Тээвэр': ['ðŸš—','ðŸš•','ðŸš™','ðŸšŒ','ðŸšŽ','ðŸŽ','ðŸš“','ðŸš‘','ðŸš’','ðŸš','ðŸ›»','ðŸšš','ðŸš›','ðŸšœ','ðŸ›µ','ðŸ','ðŸ›º','ðŸš²','ðŸ›´','ðŸ›¹','ðŸ›¼','ðŸš','ðŸ›£','ðŸ›¤','✈️','ðŸ›©','ðŸ›«','ðŸ›¬','ðŸª‚','ðŸ’º','ðŸš','ðŸš¤','ðŸ›¥','⛵','ðŸš¢','⚓','ðŸª','⛽','ðŸš§','ðŸš¨','ðŸš¥','ðŸš®'],
-  'Цаг': ['⏰','⏱','⏲','ðŸ•°','ðŸ•›','ðŸ•','ðŸ•‘','ðŸ•’','ðŸ•“','ðŸ•”','ðŸ••','ðŸ•–','ðŸ•—','ðŸ•˜','ðŸ•™','ðŸ•š','⏳'],
-  'Од': ['⭐','ðŸŒŸ','✨','ðŸ’«','☄️','ðŸŒ™','☀️','ðŸŒ¤','⛅','ðŸŒ¥','☁️','ðŸŒ§','⛈','ðŸŒ©','ðŸŒ¨','❄️','☃️','⛄','ðŸŒ¬','ðŸ’¨','ðŸŒª','ðŸŒˆ','☂️','☔','⚡'],
+  'Сэтгэл': ['😀','😃','😄','😁','😆','🥹','😂','🤣','😊','😇','🙂','🙃','😉','😌','😍','🥰','😘','😗','😙','😚','😋','😛','😜','🤪','😝','🤑','🤗','🤭','🤫','🤔','🤐','🤨','😐','😑','😶','😏','😒','🙄','😬','🤥','😌','😔','😪','🤤','😴','😷','🤒','🤕','🤢','🤮','🤧','🥵','🥶','🥴','😵','🤯','🤠','🥳','😎','🤓','🧐'],
+  'Гар': ['👍','👎','👏','🙌','🤝','🙏','✌️','🤞','🤟','🤘','👌','🤌','🤏','✋','🤚','🖐','🖖','👋','🤙','💪','🦾','🖕','✍️','💅','🤳'],
+  'Зүрх': ['❤️','🧡','💛','💚','💙','💜','🖤','🤍','🤎','💔','❤️‍🔥','❤️‍🩹','❣️','💕','💞','💓','💗','💖','💘','💝','💟'],
+  'Байгаль': ['🌸','🌺','🌻','🌹','🌷','🌼','🌱','🌿','🍀','🍁','🍂','🍃','🌲','🌳','🌴','🌵','🌾','🍁','🍂'],
+  'Амьтан': ['🐶','🐱','🐭','🐹','🐰','🦊','🐻','🐼','🐨','🐯','🦁','🐮','🐷','🐸','🐵','🐔','🐧','🐦','🐤','🐣','🦆','🦅','🦉','🦇','🐺','🐗','🐴','🦄','🐝','🐛','🦋','🐌','🐞','🐜','🦟','🦗','🕷','🐢','🐍','🦎','🦖','🦕','🐙','🦑','🦐','🦞','🦀','🐡','🐠','🐟','🐬','🐳','🐋','🦈','🐊','🐅','🐆','🦓','🦍','🦧','🐘','🦛','🦏','🐪','🐫','🦒','🦘','🦬','🐃','🐂','🐄','🐎','🐖','🐏','🐑','🐐','🦙','🦌','🐕','🐩','🐈','🐈‍⬛','🐓','🦃','🦚','🦜','🦢','🦩','🕊','🐇','🦝','🦨','🦡','🦦','🦫','🐿','🦔'],
+  'Хоол': ['🍎','🍐','🍊','🍋','🍌','🍉','🍇','🍓','🫐','🍈','🍒','🍑','🥭','🍍','🥥','🥝','🍅','🍆','🥑','🥦','🥬','🥒','🌶','🫑','🌽','🥕','🫒','🧄','🧅','🥔','🍠','🥐','🥯','🍞','🥖','🥨','🧀','🥚','🍳','🧈','🥞','🧇','🥓','🥩','🍗','🍖','🦴','🌭','🍔','🍟','🍕','🫓','🥪','🥙','🧆','🌮','🌯','🫔','🥗','🥘','🫕','🥫','🍝','🍜','🍲','🍛','🍣','🍱','🥟','🦪','🍤','🍙','🍚','🍘','🍥','🥠','🥮','🍢','🍡','🍧','🍨','🍦','🥧','🧁','🍰','🎂','🍮','🍭','🍬','🍫','🍿','🍩','🍪','🌰','🥜','🍯'],
+  'Байгууламж': ['🏠','🏡','🏢','🏣','🏤','🏥','🏦','🏨','🏩','💒','⛪','🕌','🕍','🛕','⛩','🗼','🗽','🏰','🏟','🎪'],
+  'Тээвэр': ['🚗','🚕','🚙','🚌','🚎','🏎','🚓','🚑','🚒','🚐','🛻','🚚','🚛','🚜','🛵','🏍','🛺','🚲','🛴','🛹','🛼','🚏','🛣','🛤','✈️','🛩','🛫','🛬','🪂','💺','🚁','🚤','🛥','⛵','🚢','⚓','🪝','⛽','🚧','🚨','🚥','🚮'],
+  'Цаг': ['⏰','⏱','⏲','🕰','🕛','🕐','🕑','🕒','🕓','🕔','🕕','🕖','🕗','🕘','🕙','🕚','⏳'],
+  'Од': ['⭐','🌟','✨','💫','☄️','🌙','☀️','🌤','⛅','🌥','☁️','🌧','⛈','🌩','🌨','❄️','☃️','⛄','🌬','💨','🌪','🌈','☂️','☔','⚡'],
 };
 
 // ---------- Password protection ----------
@@ -382,9 +382,47 @@ function renderCalendar() {
     const e = getEntry(dateStr);
     if (e) { cell.classList.add('has-entry'); if (e.mood) { const md = document.createElement('span'); md.className = 'cal-mood'; md.textContent = e.mood; cell.append(md); } }
     cell.append(document.createTextNode(dayNum));
-    cell.addEventListener('click', () => { state.current = dateStr; switchView('editor'); renderEditor(); });
+    cell.addEventListener('click', () => { showCalDetail(dateStr); });
     grid.append(cell);
   }
+  showCalDetail(state.current);
+}
+
+// ---------- Calendar detail (entry preview) ----------
+function showCalDetail(date) {
+  const box = $('cal-detail');
+  if (!box) return;
+  box.replaceChildren();
+  const e = getEntry(date);
+  const head = document.createElement('div'); head.className = 'cal-detail-head';
+  const mood = document.createElement('span'); mood.className = 'cal-detail-mood'; mood.textContent = (e && e.mood) || '📝';
+  const dateEl = document.createElement('strong'); dateEl.textContent = formatDate(date);
+  const btns = document.createElement('div'); btns.className = 'cal-detail-btns';
+  const editBtn = document.createElement('button'); editBtn.type = 'button'; editBtn.className = 'card-action'; editBtn.textContent = '✎ Засах';
+  editBtn.addEventListener('click', () => { state.current = date; switchView('editor'); renderEditor(); });
+  const delBtn = document.createElement('button'); delBtn.type = 'button'; delBtn.className = 'card-action danger'; delBtn.textContent = '🗑 Устгах';
+  delBtn.addEventListener('click', () => deleteEntry(date));
+  btns.append(editBtn, delBtn);
+  head.append(mood, dateEl, btns);
+  box.append(head);
+
+  if (!e) {
+    const empty = document.createElement('p'); empty.className = 'cal-detail-empty'; empty.textContent = 'Энэ өдөр бичигдээгүй байна.';
+    box.append(empty);
+    return;
+  }
+  if (e.title) { const h = document.createElement('h3'); h.className = 'cal-detail-title'; h.textContent = e.title; box.append(h); }
+  if (e.tags && e.tags.length) {
+    const tg = document.createElement('div'); tg.className = 'ec-tags';
+    e.tags.forEach(t => { const s = document.createElement('span'); s.className = 'ec-tag'; s.textContent = t; tg.append(s); });
+    box.append(tg);
+  }
+  const body = document.createElement('div'); body.className = 'cal-detail-body';
+  body.innerHTML = e.html || '';
+  box.append(body);
+  const foot = document.createElement('div'); foot.className = 'cal-detail-foot';
+  foot.textContent = `${wordCount(e.html || '')} үг`;
+  box.append(foot);
 }
 
 // ---------- List view ----------
@@ -405,13 +443,13 @@ function renderList() {
     const e = state.entries[d];
     const card = document.createElement('div'); card.className = 'entry-card';
     const titleHtml = e.title ? `<div class="ec-title">${e.title}</div>` : '';
-    card.innerHTML = `<div class="ec-date"><span class="ec-mood">${e.mood || 'ðŸ“'}</span>${formatDate(d)}</div>${titleHtml}<div class="ec-preview">${(e.html || '').replace(/<[^>]+>/g, ' ')}</div>`;
+    card.innerHTML = `<div class="ec-date"><span class="ec-mood">${e.mood || '📝'}</span>${formatDate(d)}</div>${titleHtml}<div class="ec-preview">${(e.html || '').replace(/<[^>]+>/g, ' ')}</div>`;
     if (e.tags && e.tags.length) {
       const tg = document.createElement('div'); tg.className = 'ec-tags';
       e.tags.forEach(t => { const s = document.createElement('span'); s.className = 'ec-tag'; s.textContent = t; tg.append(s); });
       card.append(tg);
     }
-    card.addEventListener('click', () => { state.current = d; switchView('editor'); renderEditor(); });
+    wireEntryCardActions(card, d);
     grid.append(card);
   });
 }
@@ -438,21 +476,50 @@ function doSearch(q) {
       preview = (start > 0 ? '…' : '') + preview.slice(start, end) + (end < preview.length ? '…' : '');
     }
     const titleHtml = e.title ? `<div class="ec-title">${e.title}</div>` : '';
-    card.innerHTML = `<div class="ec-date"><span class="ec-mood">${e.mood || 'ðŸ“'}</span>${formatDate(d)}</div>${titleHtml}<div class="ec-preview">${preview}</div>`;
-    card.addEventListener('click', () => { state.current = d; switchView('editor'); renderEditor(); });
+    card.innerHTML = `<div class="ec-date"><span class="ec-mood">${e.mood || '📝'}</span>${formatDate(d)}</div>${titleHtml}<div class="ec-preview">${preview}</div>`;
+    wireEntryCardActions(card, d);
     res.append(card);
   });
 }
 
 // ---------- Mini list ----------
+function editEntry(date) {
+  state.current = date;
+  switchView('editor');
+  renderEditor();
+}
+async function deleteEntry(date) {
+  if (!confirm('Энэ тэмдэглэл устгах уу?')) return;
+  delete state.entries[date];
+  const wasCurrent = state.current === date;
+  try { await sb.from('journal_entries').delete().eq('entry_date', date); } catch (e) { console.error(e); }
+  if (wasCurrent) renderEditor();
+  toast('Тэмдэглэл устгагдлаа.');
+  refreshMiniList(); updateStats(); renderList(); renderCalendar();
+}
+function wireEntryCardActions(card, date) {
+  const actions = document.createElement('div'); actions.className = 'entry-card-actions';
+  const editBtn = document.createElement('button'); editBtn.type = 'button'; editBtn.className = 'card-action'; editBtn.title = 'Засах'; editBtn.textContent = '✎ Засах';
+  editBtn.addEventListener('click', ev => { ev.stopPropagation(); editEntry(date); });
+  const delBtn = document.createElement('button'); delBtn.type = 'button'; delBtn.className = 'card-action danger'; delBtn.title = 'Устгах'; delBtn.textContent = '🗑 Устгах';
+  delBtn.addEventListener('click', ev => { ev.stopPropagation(); deleteEntry(date); });
+  actions.append(editBtn, delBtn);
+  card.append(actions);
+}
 function refreshMiniList() {
   const list = $('mini-list'); list.replaceChildren();
-  const dates = Object.keys(state.entries).sort((a, b) => b.localeCompare(a)).slice(0, 12);
+  const sort = ($('mini-sort') && $('mini-sort').value) || 'newest';
+  const dates = Object.keys(state.entries).sort((a, b) => sort === 'oldest' ? a.localeCompare(b) : b.localeCompare(a)).slice(0, 12);
   dates.forEach(d => {
     const e = state.entries[d];
     const preview = e.title ? e.title : ((e.html || '').replace(/<[^>]+>/g, ' ') || 'Хоосон');
     const item = document.createElement('div'); item.className = 'mini-entry' + (d === state.current ? ' active' : '');
-    item.innerHTML = `<span class="me-date"><span class="me-mood">${e.mood || 'ðŸ“'}</span>${d.slice(5)}</span><span class="me-preview">${preview}</span>`;
+    item.innerHTML = `<span class="me-date"><span class="me-mood">${e.mood || '📝'}</span>${d.slice(5)}</span><span class="me-preview">${preview}</span>`;
+    const actions = item.appendChild(document.createElement('div')); actions.className = 'me-actions';
+    const editBtn = item.appendChild(document.createElement('button')); editBtn.type = 'button'; editBtn.className = 'mini-action'; editBtn.dataset.act = 'edit'; editBtn.title = 'Засах'; editBtn.textContent = '✎';
+    editBtn.addEventListener('click', ev => { ev.stopPropagation(); editEntry(d); });
+    const delBtn = item.appendChild(document.createElement('button')); delBtn.type = 'button'; delBtn.className = 'mini-action danger'; delBtn.dataset.act = 'del'; delBtn.title = 'Устгах'; delBtn.textContent = '🗑';
+    delBtn.addEventListener('click', ev => { ev.stopPropagation(); deleteEntry(d); });
     item.addEventListener('click', () => { state.current = d; switchView('editor'); renderEditor(); });
     list.append(item);
   });
@@ -595,13 +662,13 @@ function createImageBlock(src, alt) {
     return b;
   };
   toolbar.append(
-    mkBtn('ðŸ”+', 'Томруулах', () => { const w = img.offsetWidth || img.naturalWidth; img.style.width = Math.min(w * 1.25, wrap.parentElement.offsetWidth - 20) + 'px'; img.style.height = 'auto'; triggerAutosave(); }),
-    mkBtn('ðŸ”−', 'Жижигрүүлэх', () => { const w = img.offsetWidth || img.naturalWidth; img.style.width = Math.max(80, w * 0.8) + 'px'; img.style.height = 'auto'; triggerAutosave(); }),
-    mkBtn('â¬›', 'Анхны хэмжээ', () => { img.style.width = ''; img.style.height = ''; triggerAutosave(); }),
+    mkBtn('🔍+', 'Томруулах', () => { const w = img.offsetWidth || img.naturalWidth; img.style.width = Math.min(w * 1.25, wrap.parentElement.offsetWidth - 20) + 'px'; img.style.height = 'auto'; triggerAutosave(); }),
+    mkBtn('🔍−', 'Жижигрүүлэх', () => { const w = img.offsetWidth || img.naturalWidth; img.style.width = Math.max(80, w * 0.8) + 'px'; img.style.height = 'auto'; triggerAutosave(); }),
+    mkBtn('⬛', 'Анхны хэмжээ', () => { img.style.width = ''; img.style.height = ''; triggerAutosave(); }),
     mkBtn('✂️', 'Crop (тасдах)', () => enterCropMode(wrap, img)),
     mkBtn('↺', 'Зүүн эргүүлэх', () => rotateImage(wrap, img, -90)),
     mkBtn('↻', 'Баруун эргүүлэх', () => rotateImage(wrap, img, 90)),
-    mkBtn('â¬…', 'Зүүн талд', () => { wrap.style.textAlign = 'left'; img.style.display = 'block'; img.style.margin = '8px 0'; triggerAutosave(); }),
+    mkBtn('⬅', 'Зүүн талд', () => { wrap.style.textAlign = 'left'; img.style.display = 'block'; img.style.margin = '8px 0'; triggerAutosave(); }),
     mkBtn('↔', 'Төвд', () => { wrap.style.textAlign = 'center'; img.style.display = 'block'; img.style.margin = '8px auto'; triggerAutosave(); }),
     mkBtn('➡', 'Баруун талд', () => { wrap.style.textAlign = 'right'; img.style.display = 'block'; img.style.margin = '8px 0 8px auto'; triggerAutosave(); }),
   );
@@ -940,7 +1007,7 @@ function renderCapsule(capsule) {
     setTimeout(() => renderCapsule(capsule), Math.min(unlock - new Date(), 60000));
   } else {
     const box = document.createElement('div'); box.className = 'capsule-opened';
-    const icon = document.createElement('div'); icon.className = 'capsule-icon'; icon.textContent = 'ðŸ”“';
+    const icon = document.createElement('div'); icon.className = 'capsule-icon'; icon.textContent = '🔓';
     const title = document.createElement('div'); title.className = 'capsule-title'; title.textContent = capsule.dataset.title || 'Цагны капсул';
     const content = document.createElement('div'); content.className = 'capsule-content'; content.innerHTML = capsule.dataset.content || '';
     box.append(icon, title, content);
@@ -1269,10 +1336,6 @@ async function enterApp(user) {
   $('side-user').hidden = false;
   $('session-name').textContent = user.username;
   $('logout-btn').hidden = false;
-  state.session = user;
-  $('side-user').hidden = false;
-  $('session-name').textContent = user.username;
-  $('logout-btn').hidden = false;
   await load();
   scheduleReminder();
   if (state.settings.theme === 'dark') applyTheme('Харанхуй');
@@ -1371,12 +1434,7 @@ function attachAppListeners() {
     $('capsule-content').value = '';
   });
   $('capsule-dialog').addEventListener('cancel', e => e.preventDefault());
-  $('tag-btn').addEventListener('click', e => { e.stopPropagation(); togglePopover('tag-popover', e.currentTarget); renderTagCloud(); });
   $('clear-btn').addEventListener('click', () => { if (confirm('Тэмдэглэлийг цэвэрлэх үү?')) { $('editor').innerHTML = ''; triggerAutosave(); } });
-  $('emoji-btn').addEventListener('click', e => { e.stopPropagation(); togglePopover('emoji-popover', e.currentTarget); });
-  $('gif-btn').addEventListener('click', e => { e.stopPropagation(); togglePopover('gif-popover', e.currentTarget); searchGif(''); });
-  $('color-btn').addEventListener('click', e => { e.stopPropagation(); togglePopover('color-popover', e.currentTarget); });
-  $('font-btn').addEventListener('click', e => { e.stopPropagation(); togglePopover('font-popover', e.currentTarget); });
   $('hl-custom').addEventListener('input', e => { highlightSelection(e.target.value); closePopovers(); });
   $('emoji-search').addEventListener('input', e => filterEmoji(e.target.value));
   $('gif-search').addEventListener('input', e => { clearTimeout(gifTimer); gifTimer = setTimeout(() => searchGif(e.target.value), 400); });
@@ -1403,6 +1461,7 @@ function attachAppListeners() {
   $('cal-next').addEventListener('click', () => { calMonth.setMonth(calMonth.getMonth() + 1); renderCalendar(); });
   $('list-search').addEventListener('input', renderList);
   $('list-sort').addEventListener('change', renderList);
+  $('mini-sort').addEventListener('change', refreshMiniList);
   $('global-search').addEventListener('input', e => doSearch(e.target.value));
   $('editor').addEventListener('input', triggerAutosave);
   $('editor').addEventListener('blur', saveCurrent);
@@ -1419,8 +1478,6 @@ function attachAppListeners() {
     const files = [...e.dataTransfer.files].filter(f => f.type.startsWith('image/'));
     files.forEach(f => insertImageFile(f));
   });
-  $('entry-title').addEventListener('input', triggerAutosave);
-  $('entry-date').addEventListener('change', e => { state.current = e.target.value; renderEditor(); });
   $('export-btn').addEventListener('click', exportData);
   $('import-btn').addEventListener('click', () => $('import-file').click());
   $('import-file').addEventListener('change', e => { if (e.target.files[0]) importData(e.target.files[0]); e.target.value = ''; });
